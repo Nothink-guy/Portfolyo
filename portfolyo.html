@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sehend Şirazi | Portfolyo</title>
+    <style>
+        /* ========== 1. GENEL VE NAVBAR ========== */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #0028da 0%, #6af8bd 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding-top: 100px;
+            transition: background 0.3s ease;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-logo { color: white; font-size: 24px; font-weight: bold; letter-spacing: 1px; }
+        .nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+        .nav-links a {
+            color: #f0f0f0;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover { color: #6af8bd; border-bottom-color: #6af8bd; }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s ease;
+            margin-left: 20px;
+        }
+        .nav-button:hover { background: white; color: #0028da; border-color: white; }
+
+        /* ========== 2. BÖLÜMLER (Section) ========== */
+        .bolum {
+            min-height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            width: 100%;
+        }
+        .bolum.aktif { display: flex; }
+
+        #hakkimda { background-color: #f4f9ff; }
+        #iletisim { background-color: #e8f5e9; }
+        #todo { background: transparent; }
+
+        /* ========== 3. KARTVİZİT (Ana Sayfa) ========== */
+        .kart {
+            background-color: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 700px;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .resim-alani { flex-shrink: 0; }
+        .resim-alani img {
+            width: 150px; height: 150px;
+            border-radius: 50%; object-fit: cover;
+            border: 5px solid #667eea;
+        }
+        .yazi-alani h1 { color: #333; margin: 0 0 5px 0; font-size: 28px; }
+        .yazi-alani h3 { color: #667eea; margin: 0 0 15px 0; font-weight: 400; }
+        .yazi-alani p { color: #555; line-height: 1.5; margin: 0 0 20px 0; }
+        .yetenekler ul {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px 20px;
+            list-style-type: "✅ ";
+            padding: 0;
+            margin: 5px 0 20px 0;
+        }
+        .yetenekler ul li { color: #444; }
+        .yazi-alani .linkedin-buton {
+            background-color: #e22323;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .yazi-alani .linkedin-buton:hover { background-color: #764ba2; transform: scale(1.05); }
+
+        /* ========== 4. İÇERİK KUTULARI ========== */
+        .icerik-kutusu {
+            background-color: white;
+            padding: 50px;
+            border-radius: 30px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: background 0.3s, color 0.3s;
+        }
+        .icerik-kutusu h2 { color: #0028da; margin-bottom: 20px; }
+        .icerik-kutusu p { color: #333; font-size: 18px; line-height: 1.6; }
+        .iletisim-butonu {
+            display: inline-block; margin-top: 20px;
+            background-color: #0028da; color: white;
+            padding: 15px 40px; border-radius: 50px;
+            text-decoration: none; font-weight: bold; transition: 0.3s;
+        }
+        .iletisim-butonu:hover { background-color: #6af8bd; color: #0028da; }
+
+        /* ========== 5. YAPILACAKLAR LİSTESİ (TODO) ========== */
+        .todo-kutusu {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 700px;
+            max-width: 100%;
+            transition: background 0.3s, color 0.3s;
+        }
+        .todo-kutusu h1 { text-align: center; color: #0028da; margin-top: 0; }
+        .giris-alani { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .giris-alani input {
+            flex: 1; padding: 12px 15px;
+            border: 2px solid #ddd; border-radius: 50px; font-size: 16px;
+            outline: none; transition: 0.3s;
+            min-width: 150px;
+        }
+        .giris-alani input:focus { border-color: #0028da; }
+        .giris-alani button {
+            background: #0028da; color: white; border: none;
+            padding: 12px 25px; border-radius: 50px; font-weight: bold;
+            cursor: pointer; transition: 0.3s;
+        }
+        .giris-alani button:hover { background: #6af8bd; color: #0028da; }
+
+        /* Filtre Butonları Stili */
+        .filtreler {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filtre-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            border: 2px solid transparent;
+        }
+        .filtre-btn:hover { background: #e0e0e0; }
+        .filtre-btn.aktif {
+            background: #0028da;
+            color: white;
+            border-color: #0028da;
+        }
+        body.dark-mode .filtre-btn {
+            background: #2a2a3f;
+            color: #ddd;
+        }
+        body.dark-mode .filtre-btn:hover { background: #3a3a5f; }
+        body.dark-mode .filtre-btn.aktif {
+            background: #6af8bd;
+            color: #0028da;
+            border-color: #6af8bd;
+        }
+
+        /* 🔥 YENİ: Veri Yönetimi Butonları Stili */
+        .veri-yonetimi {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .veri-btn {
+            background: transparent;
+            border: 2px solid #ccc;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+        .veri-btn:hover {
+            background: #f0f0f0;
+            border-color: #888;
+            color: #333;
+        }
+        body.dark-mode .veri-btn {
+            color: #aaa;
+            border-color: #444;
+        }
+        body.dark-mode .veri-btn:hover {
+            background: #2a2a3f;
+            border-color: #888;
+            color: #f0f0f0;
+        }
+
+        #gorevListesi { list-style: none; padding: 0; margin: 0; }
+        #gorevListesi li {
+            background: #f4f9ff; padding: 12px 20px;
+            border-radius: 15px; margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-left: 5px solid #0028da; font-weight: 500;
+            flex-wrap: wrap; gap: 10px;
+            transition: background 0.3s;
+        }
+        #gorevListesi li .sol-kisim { flex: 1; }
+        .gorev-metni.tamamlandi { text-decoration: line-through; opacity: 0.7; color: #7f8fa6; }
+        .gorev-detay { font-size: 11px; color: #999; display: block; margin-top: 4px; }
+        .gorev-detay .tamamlandi-bilgi { color: #2ed573; font-weight: bold; }
+
+        .tamamla-btn {
+            background: #2ed573; color: white; border: none;
+            padding: 6px 15px; border-radius: 30px; cursor: pointer;
+            font-size: 14px; transition: 0.3s; margin-right: 8px;
+        }
+        .tamamla-btn:hover { background: #05c46b; transform: scale(1.05); }
+        .tamamla-btn:disabled { background: #7f8fa6; cursor: not-allowed; opacity: 0.6; transform: none; }
+
+        .duzenle-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            margin-right: 8px;
+        }
+        .duzenle-btn:hover { background: #e67e22; transform: scale(1.05); }
+
+        .sil-btn {
+            background: #ff4757; color: white; border: none;
+            padding: 6px 15px; border-radius: 30px; cursor: pointer;
+            font-size: 14px; transition: 0.3s;
+        }
+        .sil-btn:hover { background: #c0392b; transform: scale(1.05); }
+        .bos-mesaj { text-align: center; color: #888; font-style: italic; padding: 20px; }
+
+        /* ========== 6. DARK MODE ========== */
+        body.dark-mode {
+            background: #0f0f1a !important;
+        }
+        body.dark-mode .kart,
+        body.dark-mode .icerik-kutusu,
+        body.dark-mode .todo-kutusu {
+            background-color: #1e1e2f !important;
+            color: #e0e0e0 !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+            border: 1px solid #333;
+        }
+        body.dark-mode .yazi-alani h1,
+        body.dark-mode .yazi-alani h3,
+        body.dark-mode .yazi-alani p,
+        body.dark-mode .yetenekler h4,
+        body.dark-mode .yetenekler ul li,
+        body.dark-mode .icerik-kutusu h2,
+        body.dark-mode .icerik-kutusu p,
+        body.dark-mode .todo-kutusu h1 {
+            color: #f0f0f0 !important;
+        }
+        body.dark-mode .resim-alani img { border-color: #6af8bd !important; }
+        body.dark-mode .yazi-alani .linkedin-buton {
+            background-color: #6af8bd; color: #0028da;
+        }
+        body.dark-mode .yazi-alani .linkedin-buton:hover { background-color: #ffffff; color: #000; }
+        body.dark-mode #hakkimda { background-color: #1a1a2e; }
+        body.dark-mode #iletisim { background-color: #16213e; }
+        body.dark-mode #gorevListesi li {
+            background: #2a2a3f;
+            border-left-color: #6af8bd;
+            color: #f0f0f0;
+        }
+        body.dark-mode .gorev-detay { color: #aaa; }
+        body.dark-mode .gorev-metni.tamamlandi { color: #888; }
+
+        /* ========== 7. MOBİL DESTEK ========== */
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; padding: 15px 20px; }
+            .nav-links a { margin-left: 0; margin-right: 15px; font-size: 14px; }
+            .nav-button { margin-left: 0; margin-top: 5px; font-size: 13px; padding: 6px 15px; }
+            body { padding-top: 150px; }
+            .kart { flex-direction: column; text-align: center; width: 90%; padding: 25px; }
+            .resim-alani img { width: 120px; height: 120px; }
+            .yazi-alani h1 { font-size: 24px; }
+            .yetenekler ul { grid-template-columns: 1fr; }
+            .icerik-kutusu { padding: 30px 20px; }
+            .todo-kutusu { padding: 25px; width: 90%; }
+            .giris-alani { flex-direction: column; }
+            .giris-alani button { width: 100%; }
+            #gorevListesi li { flex-direction: column; align-items: stretch; text-align: center; }
+            .tamamla-btn, .duzenle-btn { margin-right: 0; margin-bottom: 5px; }
+            .filtreler { gap: 5px; }
+            .filtre-btn { font-size: 13px; padding: 6px 15px; }
+            .veri-yonetimi { gap: 10px; }
+            .veri-btn { font-size: 13px; padding: 6px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="nav-logo">👨‍💼 Sehend</div>
+        <div class="nav-links">
+            <a href="#" data-section="anasayfa">Ana Sayfa</a>
+            <a href="#" data-section="hakkimda">Hakkımda</a>
+            <a href="#" data-section="todo">Yapılacaklar</a>
+            <a href="#" data-section="iletisim">İletişim</a>
+            <button id="geceModuButonu" class="nav-button">🌙 Gece Modu</button>
+        </div>
+    </nav>
+
+    <!-- ===== BÖLÜM 1: ANA SAYFA ===== -->
+    <section id="anasayfa" class="bolum aktif">
+        <div class="kart">
+            <div class="resim-alani">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiYRxJvJ6enWZiHJxYVYpqrGd-oYoNbVm3SXL8-ewpNim0Yeq1peE75Ck&s=10" alt="Profil Resmi">
+            </div>
+            <div class="yazi-alani">
+                <h1>Sehend Şirazi</h1>
+                <h3>Hijyen Fabrika Müdürü</h3>
+                <p>DeepSeek ile HTML, CSS ve JavaScript öğreniyorum. Artık verilerimi yedekleyip geri yükleyebiliyorum!</p>
+                <div class="yetenekler">
+                    <h4>🧰 Yeteneklerim</h4>
+                    <ul>
+                        <li>Hijyen Yönetimi</li>
+                        <li>Takım Liderliği</li>
+                        <li>HTML &amp; CSS</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </div>
+                <a href="https://www.linkedin.com/in/sahand-nahadi-shiraz-146662b2/" target="_blank" class="linkedin-buton">LinkedIn'de Gör</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BÖLÜM 2: HAKKIMDA ===== -->
+    <section id="hakkimda" class="bolum">
+        <div class="icerik-kutusu">
+            <h2>Hakkımda</h2>
+            <p>Merhaba! 10 yılı aşkın hijyen ve sanitasyon yönetimi deneyimine sahibim. Fabrikalarda ISO standartlarını uyguluyor, ekipleri yönetiyorum. Şimdi ise yazılım dünyasına adım atarak DeepSeek ile HTML ve CSS öğreniyorum. Teknoloji ve hijyenin kesişiminde yeni projeler üretmeyi hedefliyorum.</p>
+        </div>
+    </section>
+
+    <!-- ===== BÖLÜM 3: YAPILACAKLAR (TODO) ===== -->
+    <section id="todo" class="bolum">
+        <div class="todo-kutusu">
+            <h1>📝 Yapılacaklar</h1>
+            <div class="giris-alani">
+                <input type="text" id="gorevInput" placeholder="Yeni bir görev ekle...">
+                <button id="ekleButonu">➕ Ekle</button>
+            </div>
+
+            <div class="filtreler">
+                <button class="filtre-btn aktif" data-filter="all">📋 Tümü</button>
+                <button class="filtre-btn" data-filter="active">📌 Yapılacaklar</button>
+                <button class="filtre-btn" data-filter="completed">✅ Tamamlananlar</button>
+            </div>
+
+            <!-- 🔥 YENİ: Veri Yönetimi Butonları -->
+            <div class="veri-yonetimi">
+                <button id="exportButonu" class="veri-btn">💾 Dışa Aktar (Yedekle)</button>
+                <button id="importButonu" class="veri-btn">📂 Yedekten Yükle</button>
+                <input type="file" id="importDosyasi" accept=".json" style="display: none;">
+            </div>
+
+            <ul id="gorevListesi">
+                <!-- Görevler buraya gelecek -->
+            </ul>
+        </div>
+    </section>
+
+    <!-- ===== BÖLÜM 4: İLETİŞİM ===== -->
+    <section id="iletisim" class="bolum">
+        <div class="icerik-kutusu">
+            <h2>📬 İletişim</h2>
+            <p>Bana ulaşmak için LinkedIn profilimi ziyaret edebilir veya aşağıdaki butona tıklayabilirsin.</p>
+            <a href="https://www.linkedin.com/in/sahand-nahadi-shiraz-146662b2/" target="_blank" class="iletisim-butonu">Mesaj Gönder</a>
+        </div>
+    </section>
+
+    <script>
+        // ===========================================
+        // 1. MENÜ YÖNLENDİRME
+        // ===========================================
+        const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+        const bolumler = document.querySelectorAll('.bolum');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const hedefId = this.dataset.section;
+                bolumler.forEach(bolum => bolum.classList.remove('aktif'));
+                const hedefBolum = document.getElementById(hedefId);
+                if (hedefBolum) hedefBolum.classList.add('aktif');
+            });
+        });
+
+        // ===========================================
+        // 2. GECE MODU
+        // ===========================================
+        const buton = document.getElementById('geceModuButonu');
+        window.addEventListener('DOMContentLoaded', function() {
+            const kayitliMod = localStorage.getItem('darkMode');
+            if (kayitliMod === 'true') {
+                document.body.classList.add('dark-mode');
+                buton.textContent = '☀️ Gündüz Modu';
+            }
+        });
+        buton.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const modAcik = document.body.classList.contains('dark-mode');
+            buton.textContent = modAcik ? '☀️ Gündüz Modu' : '🌙 Gece Modu';
+            localStorage.setItem('darkMode', modAcik);
+        });
+
+        // ===========================================
+        // 3. YAPILACAKLAR LİSTESİ (FİLTRELI + DÜZENLE + YEDEK)
+        // ===========================================
+        const input = document.getElementById('gorevInput');
+        const ekleButon = document.getElementById('ekleButonu');
+        const liste = document.getElementById('gorevListesi');
+        
+        let aktifFiltre = 'all'; 
+
+        function formatTarih(tarihObj) {
+            const yil = tarihObj.getFullYear();
+            const ay = String(tarihObj.getMonth() + 1).padStart(2, '0');
+            const gun = String(tarihObj.getDate()).padStart(2, '0');
+            const saat = String(tarihObj.getHours()).padStart(2, '0');
+            const dakika = String(tarihObj.getMinutes()).padStart(2, '0');
+            const saniye = String(tarihObj.getSeconds()).padStart(2, '0');
+            return `${yil}-${ay}-${gun} ${saat}:${dakika}:${saniye}`;
+        }
+
+        function gorevleriYukle() {
+            const kayitli = localStorage.getItem('gorevler');
+            if (!kayitli) return [];
+
+            let veri = JSON.parse(kayitli);
+            // MIGRASYON: Eski string dizisi veya eski nesne (guncellenme yoksa ekle)
+            if (veri.length > 0 && typeof veri[0] === 'string') {
+                veri = veri.map((metin) => ({
+                    id: Date.now() + Math.random() * 1000,
+                    metin: metin,
+                    olusturulma: "Önceki kayıt",
+                    guncellenme: null,
+                    tamamlandi: false,
+                    tamamlamaTarihi: null
+                }));
+                localStorage.setItem('gorevler', JSON.stringify(veri));
+            } else {
+                // Eski nesne formatında 'guncellenme' yoksa ekle
+                let guncellendi = false;
+                veri = veri.map(g => {
+                    if (!g.guncellenme) {
+                        guncellendi = true;
+                        g.guncellenme = null;
+                    }
+                    return g;
+                });
+                if (guncellendi) {
+                    localStorage.setItem('gorevler', JSON.stringify(veri));
+                }
+            }
+            return veri;
+        }
+
+        function gorevleriKaydet(gorevDizisi) {
+            localStorage.setItem('gorevler', JSON.stringify(gorevDizisi));
+        }
+
+        function gorevleriFiltrele(gorevler) {
+            if (aktifFiltre === 'active') return gorevler.filter(g => !g.tamamlandi);
+            else if (aktifFiltre === 'completed') return gorevler.filter(g => g.tamamlandi);
+            return gorevler;
+        }
+
+        function listeyiGoster() {
+            const tumGorevler = gorevleriYukle();
+            const filtrelenmisGorevler = gorevleriFiltrele(tumGorevler);
+            
+            liste.innerHTML = '';
+
+            if (filtrelenmisGorevler.length === 0) {
+                let mesaj = '🎉 Hiç görev yok, rahatlayabilirsin!';
+                if (aktifFiltre === 'active') mesaj = '🥳 Tüm görevler tamamlanmış! Harikasın!';
+                else if (aktifFiltre === 'completed') mesaj = '📭 Henüz tamamlanan görev yok.';
+                liste.innerHTML = `<li class="bos-mesaj">${mesaj}</li>`;
+                return;
+            }
+
+            filtrelenmisGorevler.forEach((gorev) => {
+                const li = document.createElement('li');
+
+                const solKisim = document.createElement('div');
+                solKisim.className = 'sol-kisim';
+
+                const metinSpan = document.createElement('span');
+                metinSpan.className = 'gorev-metni';
+                if (gorev.tamamlandi) metinSpan.classList.add('tamamlandi');
+                metinSpan.textContent = gorev.metin;
+                solKisim.appendChild(metinSpan);
+
+                const detaySpan = document.createElement('span');
+                detaySpan.className = 'gorev-detay';
+                let detayMetin = `📅 Oluşturma: ${gorev.olusturulma}`;
+                if (gorev.guncellenme) {
+                    detayMetin += ` | 📝 Güncelleme: ${gorev.guncellenme}`;
+                }
+                if (gorev.tamamlandi && gorev.tamamlamaTarihi) {
+                    detayMetin += ` | ✅ Tamamlama: ${gorev.tamamlamaTarihi}`;
+                }
+                detaySpan.textContent = detayMetin;
+                solKisim.appendChild(detaySpan);
+                li.appendChild(solKisim);
+
+                const butonKutusu = document.createElement('div');
+
+                const tamamlaBtn = document.createElement('button');
+                tamamlaBtn.className = 'tamamla-btn';
+                if (gorev.tamamlandi) {
+                    tamamlaBtn.textContent = '✅ Tamamlandı';
+                    tamamlaBtn.disabled = true;
+                } else {
+                    tamamlaBtn.textContent = '✔ Tamamla';
+                    tamamlaBtn.addEventListener('click', function() { gorevTamamla(gorev.id); });
+                }
+                butonKutusu.appendChild(tamamlaBtn);
+
+                const duzenleBtn = document.createElement('button');
+                duzenleBtn.textContent = '✏️ Düzenle';
+                duzenleBtn.className = 'duzenle-btn';
+                duzenleBtn.addEventListener('click', function() { gorevDuzenle(gorev.id); });
+                butonKutusu.appendChild(duzenleBtn);
+
+                const silBtn = document.createElement('button');
+                silBtn.textContent = '✖ Sil';
+                silBtn.className = 'sil-btn';
+                silBtn.addEventListener('click', function() { gorevSil(gorev.id); });
+                butonKutusu.appendChild(silBtn);
+
+                li.appendChild(butonKutusu);
+                liste.appendChild(li);
+            });
+        }
+
+        // ===== GÖREV İŞLEMLERİ =====
+        function gorevEkle() {
+            const metin = input.value.trim();
+            if (metin === '') { alert('Lütfen bir görev yaz!'); return; }
+
+            const gorevler = gorevleriYukle();
+            const yeniGorev = {
+                id: Date.now() + Math.random() * 1000,
+                metin: metin,
+                olusturulma: formatTarih(new Date()),
+                guncellenme: null,
+                tamamlandi: false,
+                tamamlamaTarihi: null
+            };
+            gorevler.push(yeniGorev);
+            gorevleriKaydet(gorevler);
+            input.value = '';
+            listeyiGoster();
+        }
+
+        function gorevTamamla(id) {
+            const gorevler = gorevleriYukle();
+            const gorev = gorevler.find(g => g.id === id);
+            if (!gorev || gorev.tamamlandi) return;
+
+            gorev.tamamlandi = true;
+            gorev.tamamlamaTarihi = formatTarih(new Date());
+            gorevleriKaydet(gorevler);
+            listeyiGoster();
+        }
+
+        function gorevDuzenle(id) {
+            const gorevler = gorevleriYukle();
+            const gorev = gorevler.find(g => g.id === id);
+            if (!gorev) return;
+
+            const yeniMetin = prompt('Görevi düzenle:', gorev.metin);
+            if (yeniMetin === null) return; 
+            if (yeniMetin.trim() === '') {
+                alert('Görev metni boş olamaz!');
+                return;
+            }
+
+            gorev.metin = yeniMetin.trim();
+            gorev.guncellenme = formatTarih(new Date());
+            gorevleriKaydet(gorevler);
+            listeyiGoster();
+        }
+
+        function gorevSil(id) {
+            if (!confirm('Bu görevi silmek istediğine emin misin?')) return;
+            let gorevler = gorevleriYukle();
+            gorevler = gorevler.filter(g => g.id !== id);
+            gorevleriKaydet(gorevler);
+            listeyiGoster();
+        }
+
+        // ===== FİLTRE BUTONLARI =====
+        const filtreButonlari = document.querySelectorAll('.filtre-btn');
+        filtreButonlari.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filtreButonlari.forEach(b => b.classList.remove('aktif'));
+                this.classList.add('aktif');
+                aktifFiltre = this.dataset.filter;
+                listeyiGoster();
+            });
+        });
+
+        // ===========================================
+        // 4. 🔥 YENİ: VERİ YEDEKLEME (EXPORT / IMPORT)
+        // ===========================================
+        const exportButonu = document.getElementById('exportButonu');
+        const importButonu = document.getElementById('importButonu');
+        const importDosyasi = document.getElementById('importDosyasi');
+
+        // Dışa Aktar (Export)
+        exportButonu.addEventListener('click', function() {
+            const gorevler = gorevleriYukle();
+            if (gorevler.length === 0) {
+                alert('⚠️ Yedeklenecek hiç görev yok!');
+                return;
+            }
+            
+            // JSON verisini oluştur
+            const jsonVeri = JSON.stringify(gorevler, null, 2); // null, 2 ile düzenli formatla
+            const blob = new Blob([jsonVeri], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            // İndirme işlemini tetikle
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `gorevler_yedek_${formatTarih(new Date()).replace(/ /g, '_').replace(/:/g, '-')}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // İçe Aktar (Import) - Dosya seçme penceresini aç
+        importButonu.addEventListener('click', function() {
+            importDosyasi.click();
+        });
+
+        // Dosya seçildiğinde oku ve yükle
+        importDosyasi.addEventListener('change', function(event) {
+            const dosya = event.target.files[0];
+            if (!dosya) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const icerik = e.target.result;
+                    const yedekVeri = JSON.parse(icerik);
+
+                    // Verinin geçerli bir dizi olup olmadığını kontrol et
+                    if (!Array.isArray(yedekVeri)) {
+                        alert('❌ Geçersiz dosya formatı! Lütfen geçerli bir JSON yedek dosyası seçin.');
+                        return;
+                    }
+
+                    // En azından bir öğe varsa, temel yapıyı kontrol et (isteğe bağlı)
+                    if (yedekVeri.length > 0 && typeof yedekVeri[0] !== 'object') {
+                        alert('❌ Dosya içeriği bozuk veya uyumsuz.');
+                        return;
+                    }
+
+                    // Kullanıcıya onay sor (mevcut veriler silinecek)
+                    if (!confirm(`⚠️ Mevcut tüm görevler (${gorevleriYukle().length} adet) silinecek ve yedekteki ${yedekVeri.length} görev yüklenecek. Devam etmek istediğine emin misin?`)) {
+                        return;
+                    }
+
+                    // Yedek veriyi kaydet ve listeyi yenile
+                    localStorage.setItem('gorevler', JSON.stringify(yedekVeri));
+                    listeyiGoster();
+                    alert(`✅ Yedek başarıyla yüklendi! (${yedekVeri.length} görev)`);
+                } catch (hata) {
+                    alert('❌ Dosya okunamadı veya geçersiz JSON formatı. Lütfen doğru dosyayı seçtiğinden emin ol.');
+                    console.error(hata);
+                }
+            };
+            reader.readAsText(dosya);
+
+            // Aynı dosyayı tekrar seçebilmek için input'u temizle
+            importDosyasi.value = '';
+        });
+
+        // ===== EVENT LİSTENER'LAR =====
+        ekleButon.addEventListener('click', gorevEkle);
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') gorevEkle();
+        });
+
+        // ===== BAŞLAT =====
+        listeyiGoster();
+
+        // URL hash ile bölüm geçişi
+        window.addEventListener('load', function() {
+            if (window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                const hedef = document.getElementById(hash);
+                if (hedef) {
+                    bolumler.forEach(b => b.classList.remove('aktif'));
+                    hedef.classList.add('aktif');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
