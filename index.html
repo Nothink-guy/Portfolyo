@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sehend Şirazi | Portfolyo</title>
     <style>
         /* ===== 1. GENEL VE NAVBAR ===== */
@@ -241,7 +241,25 @@
             letter-spacing: -0.5px;
         }
 
-        /* İstatistikler */
+        /* Senkronizasyon Durumu */
+        .sync-status {
+            text-align: center;
+            font-size: 13px;
+            color: #6a6a8a;
+            margin-bottom: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .sync-status.synced {
+            color: #2ed573;
+        }
+        .sync-status.syncing {
+            color: #ffa502;
+        }
+        .sync-status.error {
+            color: #ff4757;
+        }
+
         .istatistikler {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -273,7 +291,6 @@
             color: #ff4757;
         }
 
-        /* Giriş alanı */
         .giris-alani {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -314,7 +331,6 @@
             transform: scale(1.01);
         }
 
-        /* Arama */
         .arama-alani {
             margin-bottom: 16px;
         }
@@ -336,7 +352,6 @@
             box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
         }
 
-        /* Filtreler */
         .filtreler {
             display: flex;
             justify-content: center;
@@ -367,7 +382,6 @@
             border-color: #4a6cf7;
         }
 
-        /* Veri Yönetimi */
         .veri-yonetimi {
             display: flex;
             justify-content: center;
@@ -394,7 +408,6 @@
             border-color: #4a6cf7;
         }
 
-        /* Liste */
         #gorevListesi {
             list-style: none;
             padding: 0;
@@ -776,14 +789,14 @@
             <div class="yazi-alani">
                 <h1>Sehend Şirazi</h1>
                 <h3>Hijyen Fabrika Müdürü</h3>
-                <p>DeepSeek ile HTML, CSS ve JavaScript öğreniyorum. Artık görevlere bitiş tarihi ekleyip bildirim alabiliyorum!</p>
+                <p>DeepSeek ile HTML, CSS ve JavaScript öğreniyorum. Artık görevlerim GitHub Gist ile bulutta senkronize!</p>
                 <div class="yetenekler">
                     <h4>🧰 Yeteneklerim</h4>
                     <ul>
                         <li>Hijyen Yönetimi</li>
                         <li>Takım Liderliği</li>
                         <li>HTML &amp; CSS</li>
-                        <li>JavaScript</li>
+                        <li>JavaScript &amp; GitHub API</li>
                     </ul>
                 </div>
                 <a href="https://www.linkedin.com/in/sahand-nahadi-shiraz-146662b2/" target="_blank" class="linkedin-buton">LinkedIn'de Gör</a>
@@ -795,7 +808,7 @@
     <section id="hakkimda" class="bolum">
         <div class="icerik-kutusu">
             <h2>Hakkımda</h2>
-            <p>Merhaba! 10 yılı aşkın hijyen ve sanitasyon yönetimi deneyimine sahibim. Fabrikalarda ISO standartlarını uyguluyor, ekipleri yönetiyorum. Şimdi ise yazılım dünyasına adım atarak DeepSeek ile HTML, CSS ve JavaScript öğreniyorum. Teknoloji ve hijyenin kesişiminde yeni projeler üretmeyi hedefliyorum.</p>
+            <p>Merhaba! 10 yılı aşkın hijyen ve sanitasyon yönetimi deneyimine sahibim. Fabrikalarda ISO standartlarını uyguluyor, ekipleri yönetiyorum. Şimdi ise yazılım dünyasına adım atarak DeepSeek ile HTML, CSS, JavaScript ve GitHub API öğreniyorum.</p>
         </div>
     </section>
 
@@ -804,7 +817,8 @@
         <div class="todo-kutusu">
             <h1>📝 Yapılacaklar</h1>
 
-            <!-- İstatistikler -->
+            <div id="syncStatus" class="sync-status synced">☁️ Veriler bulut ile senkronize (GitHub Gist)</div>
+
             <div class="istatistikler" id="istatistikKarti">
                 <div class="istatistik">
                     <span class="sayi" id="toplamSayi">0</span>
@@ -828,7 +842,6 @@
                 </div>
             </div>
 
-            <!-- Giriş alanı -->
             <div class="giris-alani">
                 <input type="text" id="gorevInput" placeholder="Yeni bir görev ekle..." />
                 <select id="priorityInput">
@@ -841,12 +854,10 @@
                 <button id="ekleButonu" style="grid-column: 1 / -1;">➕ Ekle</button>
             </div>
 
-            <!-- Arama -->
             <div class="arama-alani">
                 <input type="text" id="aramaInput" placeholder="🔍 Görevlerde ara..." />
             </div>
 
-            <!-- Filtreler -->
             <div class="filtreler">
                 <button class="filtre-btn aktif" data-filter="all">📋 Tümü</button>
                 <button class="filtre-btn" data-filter="active">📌 Yapılacaklar</button>
@@ -855,9 +866,8 @@
                 <button class="filtre-btn" data-filter="bugun">📅 Bugün Bitenler</button>
             </div>
 
-            <!-- Veri Yönetimi -->
             <div class="veri-yonetimi">
-                <button id="exportButonu" class="veri-btn">💾 Dışa Aktar</button>
+                <button id="exportButonu" class="veri-btn">💾 Dışa Aktar (JSON)</button>
                 <button id="importButonu" class="veri-btn">📂 Yedekten Yükle</button>
                 <button id="bildirimButonu" class="veri-btn">🔔 Bildirimleri Aktif Et</button>
                 <input type="file" id="importDosyasi" accept=".json" style="display: none;" />
@@ -879,6 +889,12 @@
     </section>
 
     <script>
+        // ==========================================================
+        // 🔥 GITHUB GIST KONFIGÜRASYONU (Kendi bilgilerinle dolu)
+        // ==========================================================
+        const GIST_ID = "bafbedb3311c795e174d9d70252876bf";
+        const GITHUB_TOKEN = "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";
+
         // ============================================================
         // 1. MENÜ YÖNLENDİRME
         // ============================================================
@@ -914,7 +930,7 @@
         });
 
         // ============================================================
-        // 3. YAPILACAKLAR LİSTESİ (DEADLINE + BİLDİRİM)
+        // 3. YAPILACAKLAR LİSTESİ (GITHUB GIST İLE SENKRONİZE)
         // ============================================================
         const input = document.getElementById('gorevInput');
         const priorityInput = document.getElementById('priorityInput');
@@ -932,6 +948,7 @@
         const tamamlananSayi = document.getElementById('tamamlananSayi');
         const yuksekOncelikSayi = document.getElementById('yuksekOncelikSayi');
         const gecikenSayi = document.getElementById('gecikenSayi');
+        const syncStatus = document.getElementById('syncStatus');
 
         // ---- Yardımcı ----
         function formatTarih(tarihObj) {
@@ -966,51 +983,115 @@
             return fark;
         }
 
-        // ---- Veri Yönetimi ----
-        function gorevleriYukle() {
-            const kayitli = localStorage.getItem('gorevler');
-            if (!kayitli) return [];
+        // ---- GitHub Gist ile Veri Yönetimi ----
+        async function gorevleriYukle() {
+            try {
+                syncStatus.textContent = '⏳ Veriler yükleniyor...';
+                syncStatus.className = 'sync-status syncing';
 
-            let veri = JSON.parse(kayitli);
-            let guncellendi = false;
-            veri = veri.map(g => {
-                if (typeof g === 'string') {
-                    guncellendi = true;
-                    return {
-                        id: Date.now() + Math.random() * 1000,
-                        metin: g,
-                        priority: 'medium',
-                        kategori: 'Genel',
-                        bitisTarihi: null,
-                        olusturulma: "Önceki kayıt",
-                        guncellenme: null,
-                        tamamlandi: false,
-                        tamamlamaTarihi: null,
-                        bildirimGonderildi: false
-                    };
+                const url = `https://api.github.com/gists/${GIST_ID}`;
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Gist okuma hatası');
+
+                const data = await response.json();
+                const files = data.files;
+                if (!files || !files['tasks.json']) {
+                    // Gist'te tasks.json yoksa boş dizi döndür
+                    return [];
                 }
-                if (!g.priority) { guncellendi = true;
-                    g.priority = 'medium'; }
-                if (!g.kategori) { guncellendi = true;
-                    g.kategori = 'Genel'; }
-                if (!g.bitisTarihi && g.bitisTarihi !== null) { guncellendi = true;
-                    g.bitisTarihi = null; }
-                if (!g.guncellenme) { guncellendi = true;
-                    g.guncellenme = null; }
-                if (!g.bildirimGonderildi && g.bildirimGonderildi !== false) {
-                    guncellendi = true;
-                    g.bildirimGonderildi = false;
+                const content = files['tasks.json'].content;
+                const gorevler = JSON.parse(content);
+
+                // Migration (eski alanları doldur)
+                let guncellendi = false;
+                const yeniVeri = gorevler.map(g => {
+                    if (typeof g === 'string') {
+                        guncellendi = true;
+                        return {
+                            id: Date.now() + Math.random() * 1000,
+                            metin: g,
+                            priority: 'medium',
+                            kategori: 'Genel',
+                            bitisTarihi: null,
+                            olusturulma: "Önceki kayıt",
+                            guncellenme: null,
+                            tamamlandi: false,
+                            tamamlamaTarihi: null,
+                            bildirimGonderildi: false
+                        };
+                    }
+                    if (!g.priority) { guncellendi = true;
+                        g.priority = 'medium'; }
+                    if (!g.kategori) { guncellendi = true;
+                        g.kategori = 'Genel'; }
+                    if (!g.bitisTarihi && g.bitisTarihi !== null) { guncellendi = true;
+                        g.bitisTarihi = null; }
+                    if (!g.guncellenme) { guncellendi = true;
+                        g.guncellenme = null; }
+                    if (!g.bildirimGonderildi && g.bildirimGonderildi !== false) {
+                        guncellendi = true;
+                        g.bildirimGonderildi = false;
+                    }
+                    return g;
+                });
+                if (guncellendi) {
+                    await gorevleriKaydet(yeniVeri);
+                    return yeniVeri;
                 }
-                return g;
-            });
-            if (guncellendi) {
-                localStorage.setItem('gorevler', JSON.stringify(veri));
+                return gorevler;
+
+            } catch (hata) {
+                console.error('Gist okuma hatası:', hata);
+                syncStatus.className = 'sync-status error';
+                syncStatus.textContent = '❌ Senkronizasyon hatası! Yerel kayıtlar gösteriliyor.';
+                // Yedek olarak localStorage'den oku
+                const localData = localStorage.getItem('gorevler');
+                return localData ? JSON.parse(localData) : [];
             }
-            return veri;
         }
 
-        function gorevleriKaydet(gorevDizisi) {
-            localStorage.setItem('gorevler', JSON.stringify(gorevDizisi));
+        async function gorevleriKaydet(gorevDizisi) {
+            try {
+                syncStatus.textContent = '⏳ Senkronize ediliyor...';
+                syncStatus.className = 'sync-status syncing';
+
+                const url = `https://api.github.com/gists/${GIST_ID}`;
+                const payload = {
+                    files: {
+                        'tasks.json': {
+                            content: JSON.stringify(gorevDizisi, null, 2)
+                        }
+                    }
+                };
+
+                const response = await fetch(url, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error('Gist güncelleme hatası');
+
+                syncStatus.className = 'sync-status synced';
+                syncStatus.textContent = '☁️ Veriler bulut ile senkronize (GitHub Gist)';
+
+                localStorage.setItem('gorevler', JSON.stringify(gorevDizisi));
+            } catch (hata) {
+                console.error('Gist yazma hatası:', hata);
+                syncStatus.className = 'sync-status error';
+                syncStatus.textContent = '❌ Kayıt hatası! Veriler sadece yerel kaydedildi.';
+                localStorage.setItem('gorevler', JSON.stringify(gorevDizisi));
+            }
         }
 
         // ---- Filtreleme ----
@@ -1032,8 +1113,8 @@
         }
 
         // ---- Listeyi Göster ----
-        function listeyiGoster() {
-            const tumGorevler = gorevleriYukle();
+        async function listeyiGoster() {
+            const tumGorevler = await gorevleriYukle();
             const filtrelenmisGorevler = gorevleriFiltreleVeSirala(tumGorevler);
 
             liste.innerHTML = '';
@@ -1056,7 +1137,6 @@
                     if (durum === 'gecikti') li.classList.add('deadline-gecikti');
                     else if (durum === 'bugun') li.classList.add('deadline-bugun');
 
-                    // Drag & Drop
                     li.addEventListener('dragstart', function(e) {
                         this.classList.add('dragging');
                         e.dataTransfer.effectAllowed = 'move';
@@ -1150,20 +1230,26 @@
                         tamamlaBtn.disabled = true;
                     } else {
                         tamamlaBtn.textContent = '✔ Tamamla';
-                        tamamlaBtn.addEventListener('click', function() { gorevTamamla(gorev.id); });
+                        tamamlaBtn.addEventListener('click', async function() {
+                            await gorevTamamla(gorev.id);
+                        });
                     }
                     butonKutusu.appendChild(tamamlaBtn);
 
                     const duzenleBtn = document.createElement('button');
                     duzenleBtn.textContent = '✏️ Düzenle';
                     duzenleBtn.className = 'duzenle-btn';
-                    duzenleBtn.addEventListener('click', function() { gorevDuzenle(gorev.id); });
+                    duzenleBtn.addEventListener('click', async function() {
+                        await gorevDuzenle(gorev.id);
+                    });
                     butonKutusu.appendChild(duzenleBtn);
 
                     const silBtn = document.createElement('button');
                     silBtn.textContent = '✖ Sil';
                     silBtn.className = 'sil-btn';
-                    silBtn.addEventListener('click', function() { gorevSil(gorev.id); });
+                    silBtn.addEventListener('click', async function() {
+                        await gorevSil(gorev.id);
+                    });
                     butonKutusu.appendChild(silBtn);
 
                     li.appendChild(butonKutusu);
@@ -1190,26 +1276,26 @@
         }
 
         // ---- Sürükle ----
-        function gorevSiralamaDegistir(suruklenenId, hedefId) {
-            const gorevler = gorevleriYukle();
+        async function gorevSiralamaDegistir(suruklenenId, hedefId) {
+            const gorevler = await gorevleriYukle();
             const suruklenenIndex = gorevler.findIndex(g => g.id == suruklenenId);
             const hedefIndex = gorevler.findIndex(g => g.id == hedefId);
             if (suruklenenIndex === -1 || hedefIndex === -1) return;
             const [suruklenen] = gorevler.splice(suruklenenIndex, 1);
             gorevler.splice(hedefIndex, 0, suruklenen);
-            gorevleriKaydet(gorevler);
-            listeyiGoster();
+            await gorevleriKaydet(gorevler);
+            await listeyiGoster();
         }
 
-        // ---- Görev İşlemleri ----
-        function gorevEkle() {
+        // ---- Görev İşlemleri (ASYNC) ----
+        async function gorevEkle() {
             const metin = input.value.trim();
             if (metin === '') { alert('Lütfen bir görev yaz!'); return; }
             const priority = priorityInput.value;
             const kategori = kategoriInput.value.trim() || 'Genel';
             const bitisTarihi = deadlineInput.value || null;
 
-            const gorevler = gorevleriYukle();
+            const gorevler = await gorevleriYukle();
             const yeniGorev = {
                 id: Date.now() + Math.random() * 1000,
                 metin: metin,
@@ -1223,25 +1309,25 @@
                 bildirimGonderildi: false
             };
             gorevler.push(yeniGorev);
-            gorevleriKaydet(gorevler);
+            await gorevleriKaydet(gorevler);
             input.value = '';
             kategoriInput.value = '';
             deadlineInput.value = '';
-            listeyiGoster();
+            await listeyiGoster();
         }
 
-        function gorevTamamla(id) {
-            const gorevler = gorevleriYukle();
+        async function gorevTamamla(id) {
+            const gorevler = await gorevleriYukle();
             const gorev = gorevler.find(g => g.id === id);
             if (!gorev || gorev.tamamlandi) return;
             gorev.tamamlandi = true;
             gorev.tamamlamaTarihi = formatTarih(new Date());
-            gorevleriKaydet(gorevler);
-            listeyiGoster();
+            await gorevleriKaydet(gorevler);
+            await listeyiGoster();
         }
 
-        function gorevDuzenle(id) {
-            const gorevler = gorevleriYukle();
+        async function gorevDuzenle(id) {
+            const gorevler = await gorevleriYukle();
             const gorev = gorevler.find(g => g.id === id);
             if (!gorev) return;
 
@@ -1268,19 +1354,19 @@
             gorev.kategori = yeniKategori.trim() || 'Genel';
             gorev.bitisTarihi = yeniBitis;
             gorev.guncellenme = formatTarih(new Date());
-            gorevleriKaydet(gorevler);
-            listeyiGoster();
+            await gorevleriKaydet(gorevler);
+            await listeyiGoster();
         }
 
-        function gorevSil(id) {
+        async function gorevSil(id) {
             if (!confirm('Bu görevi silmek istediğine emin misin?')) return;
-            let gorevler = gorevleriYukle();
+            let gorevler = await gorevleriYukle();
             gorevler = gorevler.filter(g => g.id !== id);
-            gorevleriKaydet(gorevler);
-            listeyiGoster();
+            await gorevleriKaydet(gorevler);
+            await listeyiGoster();
         }
 
-        // ---- Filtre Butonları ----
+        // ---- Filtre ve Arama ----
         const filtreButonlari = document.querySelectorAll('.filtre-btn');
         filtreButonlari.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -1291,21 +1377,20 @@
             });
         });
 
-        // ---- Arama ----
         aramaInput.addEventListener('input', function() {
             aramaMetni = this.value;
             listeyiGoster();
         });
 
         // ============================================================
-        // 4. VERİ YEDEKLEME (EXPORT / IMPORT)
+        // 4. VERİ YEDEKLEME (JSON İhracat / İthalat)
         // ============================================================
         const exportButonu = document.getElementById('exportButonu');
         const importButonu = document.getElementById('importButonu');
         const importDosyasi = document.getElementById('importDosyasi');
 
-        exportButonu.addEventListener('click', function() {
-            const gorevler = gorevleriYukle();
+        exportButonu.addEventListener('click', async function() {
+            const gorevler = await gorevleriYukle();
             if (gorevler.length === 0) {
                 alert('⚠️ Yedeklenecek hiç görev yok!');
                 return;
@@ -1326,11 +1411,11 @@
             importDosyasi.click();
         });
 
-        importDosyasi.addEventListener('change', function(event) {
+        importDosyasi.addEventListener('change', async function(event) {
             const dosya = event.target.files[0];
             if (!dosya) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 try {
                     const icerik = e.target.result;
                     const yedekVeri = JSON.parse(icerik);
@@ -1342,11 +1427,12 @@
                         alert('❌ Dosya içeriği bozuk.');
                         return;
                     }
-                    if (!confirm(`⚠️ Mevcut tüm görevler (${gorevleriYukle().length} adet) silinecek ve yedekteki ${yedekVeri.length} görev yüklenecek. Devam et?`)) {
+                    const mevcutSayi = (await gorevleriYukle()).length;
+                    if (!confirm(`⚠️ Mevcut tüm görevler (${mevcutSayi} adet) silinecek ve yedekteki ${yedekVeri.length} görev yüklenecek. Devam et?`)) {
                         return;
                     }
-                    localStorage.setItem('gorevler', JSON.stringify(yedekVeri));
-                    listeyiGoster();
+                    await gorevleriKaydet(yedekVeri);
+                    await listeyiGoster();
                     alert(`✅ Yedek başarıyla yüklendi! (${yedekVeri.length} görev)`);
                 } catch (hata) {
                     alert('❌ Dosya okunamadı veya geçersiz JSON formatı.');
@@ -1358,7 +1444,7 @@
         });
 
         // ============================================================
-        // 5. 🔔 BİLDİRİM (HATIRLATICI)
+        // 5. 🔔 BİLDİRİM
         // ============================================================
         function bildirimIzinIstek() {
             if (!("Notification" in window)) {
@@ -1374,7 +1460,7 @@
                         alert("✅ Bildirimler aktif! Artık görevleriniz için hatırlatıcı alacaksınız.");
                         document.getElementById('bildirimButonu').textContent = '🔔 Bildirimler Aktif';
                     } else {
-                        alert("❌ Bildirim izni reddedildi. Daha sonra tarayıcı ayarlarından değiştirebilirsiniz.");
+                        alert("❌ Bildirim izni reddedildi.");
                     }
                 });
             } else {
@@ -1391,8 +1477,8 @@
             }
         }
 
-        function deadlineKontrol() {
-            const gorevler = gorevleriYukle();
+        async function deadlineKontrol() {
+            const gorevler = await gorevleriYukle();
             const simdi = new Date();
             simdi.setHours(0, 0, 0, 0);
             let guncellendi = false;
@@ -1423,7 +1509,7 @@
             });
 
             if (guncellendi) {
-                gorevleriKaydet(gorevler);
+                await gorevleriKaydet(gorevler);
             }
         }
 
@@ -1440,19 +1526,23 @@
         });
 
         // ===== EVENT LİSTENER'LAR =====
-        ekleButon.addEventListener('click', gorevEkle);
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') gorevEkle();
+        ekleButon.addEventListener('click', async function() {
+            await gorevEkle();
         });
-        kategoriInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') gorevEkle();
+        input.addEventListener('keypress', async function(e) {
+            if (e.key === 'Enter') await gorevEkle();
         });
-        deadlineInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') gorevEkle();
+        kategoriInput.addEventListener('keypress', async function(e) {
+            if (e.key === 'Enter') await gorevEkle();
+        });
+        deadlineInput.addEventListener('keypress', async function(e) {
+            if (e.key === 'Enter') await gorevEkle();
         });
 
         // ===== BAŞLAT =====
-        listeyiGoster();
+        (async function init() {
+            await listeyiGoster();
+        })();
 
         window.addEventListener('load', function() {
             if (window.location.hash) {
