@@ -1043,11 +1043,15 @@
                     }
                     return g;
                 });
-                if (guncellendi) {
-                    await gorevleriKaydet(yeniVeri);
-                    return yeniVeri;
-                }
-                return gorevler;
+                    if (guncellendi) {
+                        await gorevleriKaydet(yeniVeri);
+                        syncStatus.className = 'sync-status synced';
+                        syncStatus.textContent = '☁️ Veriler bulut ile senkronize (GitHub Gist)';
+                        return yeniVeri;
+                    }
+                    syncStatus.className = 'sync-status synced';
+                    syncStatus.textContent = '☁️ Veriler bulut ile senkronize (GitHub Gist)';
+                    return gorevler;
 
             } catch (hata) {
                 console.error('Gist okuma hatası:', hata);
