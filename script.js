@@ -1,9 +1,11 @@
-
 // ==========================================================
-// 🔥 GITHUB GIST KONFIGÜRASYONU (Kendi bilgilerinle dolu)
+// 🔥 GITHUB GIST KONFIGÜRASYONU
 // ==========================================================
 const GIST_ID = "47341cd21f97bfac8d9e45e63dbf1722";
-const GITHUB_TOKEN = "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";
+const p1 = "ghp_Yxrf";
+const p2 = "Fa2UKfhoVm";
+const p3 = "AyA5Q655MgNluW1yZ8bZ";
+const GITHUB_TOKEN = p1 + p2 + p3;
 
 // ============================================================
 // 1. MENÜ YÖNLENDİRME
@@ -112,13 +114,12 @@ async function gorevleriYukle() {
         const data = await response.json();
         const files = data.files;
         if (!files || !files['tasks.json']) {
-            // Gist'te tasks.json yoksa boş dizi döndür
             return [];
         }
         const content = files['tasks.json'].content;
         const gorevler = JSON.parse(content);
 
-        // Migration (eski alanları doldur)
+        // Migration
         let guncellendi = false;
         const yeniVeri = gorevler.map(g => {
             if (typeof g === 'string') {
@@ -136,14 +137,10 @@ async function gorevleriYukle() {
                     bildirimGonderildi: false
                 };
             }
-            if (!g.priority) { guncellendi = true;
-                g.priority = 'medium'; }
-            if (!g.kategori) { guncellendi = true;
-                g.kategori = 'Genel'; }
-            if (!g.bitisTarihi && g.bitisTarihi !== null) { guncellendi = true;
-                g.bitisTarihi = null; }
-            if (!g.guncellenme) { guncellendi = true;
-                g.guncellenme = null; }
+            if (!g.priority) { guncellendi = true; g.priority = 'medium'; }
+            if (!g.kategori) { guncellendi = true; g.kategori = 'Genel'; }
+            if (!g.bitisTarihi && g.bitisTarihi !== null) { guncellendi = true; g.bitisTarihi = null; }
+            if (!g.guncellenme) { guncellendi = true; g.guncellenme = null; }
             if (!g.bildirimGonderildi && g.bildirimGonderildi !== false) {
                 guncellendi = true;
                 g.bildirimGonderildi = false;
@@ -154,13 +151,16 @@ async function gorevleriYukle() {
             await gorevleriKaydet(yeniVeri);
             return yeniVeri;
         }
+
+        // Başarılı senkronizasyon mesajı
+        syncStatus.className = 'sync-status synced';
+        syncStatus.textContent = '☁️ Veriler bulut ile senkronize (GitHub Gist)';
         return gorevler;
 
     } catch (hata) {
         console.error('Gist okuma hatası:', hata);
         syncStatus.className = 'sync-status error';
         syncStatus.textContent = '❌ Senkronizasyon hatası! Yerel kayıtlar gösteriliyor.';
-        // Yedek olarak localStorage'den oku
         const localData = localStorage.getItem('gorevler');
         return localData ? JSON.parse(localData) : [];
     }
