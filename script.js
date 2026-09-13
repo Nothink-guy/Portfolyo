@@ -1,10 +1,10 @@
 // ==========================================================
 // 🔥 GITHUB GIST KONFIGÜRASYONU
 // ==========================================================
-const GIST_ID = "47341cd21f97bfac8d9e45e63dbf1722";
-const p1 = "ghp_Yxrf";
-const p2 = "Fa2UKfhoVm";
-const p3 = "AyA5Q655MgNluW1yZ8bZ";
+const GIST_ID = "9da4f5eedbbb6498378bc08e47d8edd2";
+const p1 = "ghp_xfofO4nj";
+const p2 = "TPWZH3vk8OZfxLN";
+const p3 = "SP6FBzt3fg9z4";
 const GITHUB_TOKEN = p1 + p2 + p3;
 
 // ============================================================
